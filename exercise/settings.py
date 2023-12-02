@@ -54,7 +54,9 @@ ROOT_URLCONF = 'exercise.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            Path(__file__).parent.parent / Path('templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
