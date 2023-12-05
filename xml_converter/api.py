@@ -3,6 +3,8 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from xml_converter.services import parse_xml_string
+
 
 class ConverterViewSet(ViewSet):
     # Note this is not a restful API
@@ -11,4 +13,6 @@ class ConverterViewSet(ViewSet):
 
     @action(methods=["POST"], detail=False, url_path="convert")
     def convert(self, request, **kwargs):
-        return Response({})
+        xml_file = request.data.get("file")
+        response = parse_xml_string(xml_file.read().decode("utf-8"))
+        return Response(response)
