@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -14,5 +15,12 @@ class ConverterViewSet(ViewSet):
     @action(methods=["POST"], detail=False, url_path="convert")
     def convert(self, request, **kwargs):
         xml_file = request.data.get("file")
-        response = parse_xml_string(xml_file.read().decode("utf-8"))
-        return Response(response)
+        if not xml_file:
+            return JsonResponse({"error": "No file uploaded"}, status=400)
+
+        try:
+            response = parse_xml_string(xml_file.read().decode("utf-8"))
+        except Exception:
+            return JsonResponse({"error": "Invalid XML"}, status=400)
+
+        return JsonResponse(response)
