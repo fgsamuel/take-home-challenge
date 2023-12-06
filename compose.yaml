@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    command: sh -c "./scripts/start-application.sh"
+
+  web:
+    image: nginx:1.24.0-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - .:/app
+      - ./.nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+volumes:
+  database_volume:
