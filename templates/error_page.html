@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Error Processing File</h2>
+  <p>There was an error processing your XML file. Please try again.</p>
+  <a class="btn btn-primary" href="{% url 'upload_page' %}">Upload Another File</a>
+{% endblock %}

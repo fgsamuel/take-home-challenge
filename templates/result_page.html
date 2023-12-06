@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <a class="btn btn-primary" href="{% url 'upload_page' %}">Upload Another File</a>
+  <h2>XML File Result</h2>
+  <pre id="jsonData">{{ data_json | safe }}</pre>
+{% endblock %}

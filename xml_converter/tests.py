@@ -57,3 +57,39 @@ class XMLConversionTestCase(TestCase):
                     },
                 ],
             })
+
+    def test_upload_successful_json_formatted(self):
+        with (TEST_DIR / Path('addresses.xml')).open() as fp:
+            response = self.client.post('/connected/', {
+                'file': fp,
+                'output_format': 'formatted',
+            })
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('text/html', response['Content-Type'])
+
+    def test_upload_successful_json_plain(self):
+        with (TEST_DIR / Path('addresses.xml')).open() as fp:
+            response = self.client.post('/connected/', {
+                'file': fp,
+                'output_format': 'plain',
+            })
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('application/json', response['Content-Type'])
+
+    def test_upload_invalid_xml_file(self):
+        with (TEST_DIR / Path('invalid.xml')).open() as fp:
+            response = self.client.post('/connected/', {
+                'file': fp,
+            })
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'error_page.html')
+
+    def test_upload_without_file(self):
+        response = self.client.post('/connected/', {})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'error_page.html')
+
+    def test_access_upload_page(self):
+        response = self.client.get('/connected/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'upload_page.html')
