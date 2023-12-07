@@ -1,0 +1,2 @@
+class XMLConverterError(Exception):
+    pass

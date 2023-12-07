@@ -1,9 +1,9 @@
 from django.http import JsonResponse
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
-from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from xml_converter.exceptions import XMLConverterError
 from xml_converter.services import parse_xml_string
 
 
@@ -20,7 +20,7 @@ class ConverterViewSet(ViewSet):
 
         try:
             response = parse_xml_string(xml_file.read().decode("utf-8"))
-        except Exception:
+        except XMLConverterError:
             return JsonResponse({"error": "Invalid XML"}, status=400)
 
         return JsonResponse(response)

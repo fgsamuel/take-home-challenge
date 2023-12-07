@@ -1,9 +1,14 @@
 import json
+import logging
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils.datastructures import MultiValueDictKeyError
 
+from xml_converter.exceptions import XMLConverterError
 from xml_converter.services import parse_xml_string
+
+logger = logging.getLogger(__name__)
 
 
 def upload_page(request):
@@ -19,7 +24,10 @@ def upload_page(request):
             f = request.FILES['file']
             result = parse_xml_string(f.read().decode('utf-8'))
             return _return_response(result)
-        except Exception:
+        except XMLConverterError:
+            return render(request, "error_page.html")
+        except MultiValueDictKeyError:
+            logger.exception("No file uploaded", exc_info=True)
             return render(request, "error_page.html")
 
     return render(request, "upload_page.html")
