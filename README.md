@@ -1,3 +1,57 @@
+# Solution
+
+## Running the solution
+
+### Running the solution locally
+- Checkout the solution from the repository
+    - `git clone https://github.com/fgsamuel/take-home-challenge.git`
+    - `cd take-home-challenge`
+- Create a virtual environment
+  - `python -m venv venv`
+- Activate the virtual environment
+    - `source venv/bin/activate`
+- Install the requirements
+  - `pip install -r requirements.txt`
+- Copy your `.env` file
+  - `cp .env.example .env`
+- Run the project
+  - `python manage.py runserver`
+- Project will be available at `http://localhost:8000` 
+
+### Running the solution with Docker
+When using docker, the project will be executed with docker compose and behind a nginx proxy.
+
+- Checkout the solution from the repository
+    - `git clone https://github.com/fgsamuel/take-home-challenge.git`
+- Copy your `.env` file
+  - `cp .env.example .env`
+- Run the project
+  - `docker-compose up`
+- Project will be available at `http://localhost:80`
+
+
+## Implementation details
+**Handling exceptions**
+- The project uses custom exceptions to have more detailed errors
+**Centralized service**
+- The project uses a centralized service to handle the conversion
+- The service is responsible only for the conversion
+**Tests**
+- The project has unit tests for the new requirements
+**Docker**
+- The project has a docker-compose file to run the project with docker
+**External variables**
+- The project uses environment variables to configure the project easily
+**Redirecting the first page**
+- The project redirects the first page to the connected page
+
+
+
+
+
+
+# Challenge
+
 # Apollo Back-End Engineering Challenge
 
 This challenge is designed to evaluate several things:
