@@ -14,9 +14,9 @@ services:
       - TZ=America/Sao_Paulo
     volumes:
       - .:/app
+      # no ssl
       - ./.nginx/default.conf:/etc/nginx/conf.d/default.conf
+      # use ssl
+      # - ./.nginx/default-with-ssl.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
-
-volumes:
-  database_volume:
